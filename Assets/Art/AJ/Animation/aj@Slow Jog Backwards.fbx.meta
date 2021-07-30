@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 9e162a3bec8dda44cb5cee6c772b4146
+guid: 3685cc7817868d14b9f236d59fe851b9
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Left strafe
+    second: Slow Jog Backwards
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Left strafe
+      name: Slow Jog Backwards
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 22
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 9e162a3bec8dda44cb5cee6c772b4146
+guid: f8db6b103171f7b47b8466d590594986
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Left strafe
+    second: Pistol Strafe (1)
+  - first:
+      74: -338591694519384359
+    second: Pistol Strafe - FWD
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,13 +38,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Left strafe
+      name: Pistol Strafe - FWD
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 18
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -28
       level: 0
       cycleOffset: 0
       loop: 0
@@ -51,7 +54,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
