@@ -6,17 +6,12 @@ using UnityEngine;
 
 public class WeaponProjectileLauncher : WeaponComponent
 {
-    [SerializeField] private Rigidbody projectilePrefab;
-    [SerializeField] private float velocity = 40f;
     [SerializeField] private float maxDistance = 100f;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform shotPoint;
-    private RaycastHit hitInfo;
-    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private PooledMonoBehaviour impact;
+    [SerializeField] private PooledMonoBehaviour muzzleBlast;
     private Camera camera;
-    [SerializeField] private GameObject impact;
-    [SerializeField] private GameObject muzzleBlast;
-    [SerializeField] private GameObject projectile;
 
     private void OnEnable()
     {
@@ -39,13 +34,12 @@ public class WeaponProjectileLauncher : WeaponComponent
         if (Input.GetMouseButton(1))
         {
             Ray targetPoint = camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(targetPoint, out hitInfo, maxDistance, layerMask))
+            if (Physics.Raycast(targetPoint, out RaycastHit hitInfo, maxDistance, layerMask))
             {
-                Instantiate(impact, hitInfo.point, Quaternion.identity);
-                GameObject muzzleBlastPrefab = Instantiate(muzzleBlast, shotPoint.position, Quaternion.identity);
-                GameObject prefab = Instantiate(projectile, hitInfo.point, Quaternion.identity);
-                Destroy(muzzleBlastPrefab, 2f);
-                Destroy(prefab, .25f);
+                var projectile = impact.Get<Projectile>(hitInfo.point, Quaternion.identity);
+                var muzzleFlash = muzzleBlast.Get<Projectile>(shotPoint.position, Quaternion.identity);
+                //Destroy(muzzleBlastPrefab, 2f);
+                //Destroy(prefab, .25f);
             }
         }
     }

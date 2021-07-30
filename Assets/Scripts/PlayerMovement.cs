@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     bool isAiming;
     private GetGrounded grounded;
+    private static readonly int Horizontal = Animator.StringToHash("Horizontal");
+    private static readonly int Vertical = Animator.StringToHash("Vertical");
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -26,10 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isAiming = Input.GetMouseButton(1);
         var mousePosX = Input.GetAxis("Mouse X") * rotationSpeed;
+        mousePosX = mousePosX < 0 ? -1 : mousePosX > 0 ? 1 : 0; 
         var horizontal = isAiming ? mousePosX: Input.GetAxis("Horizontal")  ;
         var vertical = Input.GetAxis("Vertical");
-        var mag = Mathf.Abs(vertical) + Mathf.Abs(horizontal);
-        animator.SetFloat("Speed", mag);
+        animator.SetFloat(Horizontal, horizontal); 
+        animator.SetFloat(Vertical, vertical);
+
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         if (direction.magnitude >= 0.1)
         {
