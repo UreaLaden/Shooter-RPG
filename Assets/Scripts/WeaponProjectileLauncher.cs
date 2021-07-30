@@ -8,33 +8,45 @@ public class WeaponProjectileLauncher : WeaponComponent
 {
     [SerializeField] private Rigidbody projectilePrefab;
     [SerializeField] private float velocity = 40f;
-    [SerializeField]private float maxDistance = 100f;
-    [SerializeField]private LayerMask layerMask;
+    [SerializeField] private float maxDistance = 100f;
+    [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform shotPoint;
     private RaycastHit hitInfo;
+    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    private Camera camera;
+    [SerializeField] private GameObject impact;
+    [SerializeField] private GameObject muzzleBlast;
+    [SerializeField] private GameObject projectile;
+
+    private void OnEnable()
+    {
+        CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCameraUpdated);
+        CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
+    }
+
+    private void OnDisable()
+    {
+        CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
+    }
+
+    void OnCameraUpdated(CinemachineBrain brain)
+    {
+        camera = brain.OutputCamera;
+    }
 
     protected override void WeaponFired()
     {
-        Vector3 direction = GetDirection();
-        var projectile = Instantiate(projectilePrefab, shotPoint.position, Quaternion.Euler(direction));
-        projectile.velocity = direction * velocity;
-        Destroy(projectile.gameObject,2f);
-    }
-
-    private Vector3 GetDirection()
-    {
-        var aimPos = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var ray = new Ray(shotPoint.position,shotPoint.forward);
-        Vector3 target = ray.GetPoint(300);
-        if (Physics.Raycast(aimPos, out hitInfo, maxDistance, layerMask))
+        if (Input.GetMouseButton(1))
         {
-            Debug.Log("Hit: " + hitInfo.transform.name);
-            target = hitInfo.point;
+            Ray targetPoint = camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(targetPoint, out hitInfo, maxDistance, layerMask))
+            {
+                Instantiate(impact, hitInfo.point, Quaternion.identity);
+                GameObject muzzleBlastPrefab = Instantiate(muzzleBlast, shotPoint.position, Quaternion.identity);
+                GameObject prefab = Instantiate(projectile, hitInfo.point, Quaternion.identity);
+                Destroy(muzzleBlastPrefab, 2f);
+                Destroy(prefab, .25f);
+            }
         }
-
-        Vector3 direction = target - transform.position;
-        direction.Normalize();
-
-        return direction;
     }
 }
