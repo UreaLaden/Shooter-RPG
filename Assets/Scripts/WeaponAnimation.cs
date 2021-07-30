@@ -8,6 +8,7 @@ public class WeaponAnimation : MonoBehaviour
 {
     private Weapons weapon;
     private Animator animator;
+    private static readonly int Fire = Animator.StringToHash("Fire");
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class WeaponAnimation : MonoBehaviour
 
     private void Weapon_OnFire()
     {
-        animator.SetTrigger("Fire");
+        animator.SetTrigger(Fire);
     }
 
     private void OnDestroy()

@@ -37,7 +37,6 @@ public class Weapons : MonoBehaviour
         fireTimer = 0;
         if (_inventory.activeWeapon == this)
         {
-            Debug.Log("Pew Pew: " + gameObject.name);
             OnFire();
         }
     }

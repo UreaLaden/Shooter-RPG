@@ -2,23 +2,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(Weapons))]
 [RequireComponent(typeof(AudioSource))]
-public class WeaponSounds : MonoBehaviour
+public class WeaponSounds : WeaponComponent
 {
-    private Weapons weapon;
     private AudioSource audioSource;
-
-    private void Awake()
-    {
-        weapon = GetComponent<Weapons>();
-        audioSource = GetComponent<AudioSource>();
-    }
 
     private void Start()
     {
-        weapon.OnFire += HandleWeaponFire;
+        audioSource = GetComponent<AudioSource>();
     }
-
-    private void HandleWeaponFire()
+    protected override void WeaponFired()
     {
         if (Input.GetMouseButton(1))
         {
@@ -26,8 +18,4 @@ public class WeaponSounds : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        weapon.OnFire -= HandleWeaponFire;
-    }
 }
