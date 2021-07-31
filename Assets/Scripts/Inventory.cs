@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private Weapons[] weapons;
+    public static event Action<Weapon> OnWeaponChange = delegate {  };
+    [SerializeField] private Weapon[] weapons;
     
-    public Weapons activeWeapon;
+    public Weapon activeWeapon;
     void Update()
     {
         foreach (var weapon in weapons)
@@ -19,13 +22,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void SwitchToWeapon(Weapons weaponToSwitchTo)
+    private void SwitchToWeapon(Weapon weaponToSwitchTo)
     {
         foreach (var weapon in weapons)
         {
             weapon.gameObject.SetActive(weapon == weaponToSwitchTo);
         }
-
         activeWeapon = weaponToSwitchTo;
+
+        OnWeaponChange(weaponToSwitchTo);
     }
 }

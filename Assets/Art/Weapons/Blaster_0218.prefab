@@ -795,6 +795,7 @@ GameObject:
   - component: {fileID: 8385743660642235752}
   - component: {fileID: 8385743660642235754}
   - component: {fileID: 8385743660642235749}
+  - component: {fileID: -860574939156950976}
   m_Layer: 0
   m_Name: Blaster_0218
   m_TagString: Untagged
@@ -991,6 +992,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac0727baa4827f4abadabff26050d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-860574939156950976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385743662027141970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068747a5562241ebb89937052d3d8c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: 24
+  maxAmmoPerClip: 6
 --- !u!1 &8385743662027141972
 GameObject:
   m_ObjectHideFlags: 0

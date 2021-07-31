@@ -8,30 +8,26 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float mouseLookSensitivity = 1f;
     [SerializeField] private CinemachineFreeLook freeLookCamera;
     [Range(-5, 5)] [SerializeField] private float yOffsetMin, yOffsetMax;
-    private CinemachineComposer aim;
-    private bool isAiming = false;
     [SerializeField] private float speed = .2f;
     [SerializeField]private float xOffsetMin, xOffsetMax;
+    private CinemachineComposer aim;
+    private bool isAiming;
 
 
     private void Awake()
     {
-
         aim = followCamera.GetCinemachineComponent<CinemachineComposer>();
         freeLookCamera.Priority = 0;
-        
     }
     private void LateUpdate()
     {
         isAiming = Input.GetMouseButton(1);
         freeLookCamera.Priority = isAiming ? 0 : 100;
-        //freeLookCamera.m_RecenterToTargetHeading.m_enabled = isAiming;
 
         if (isAiming)
         {
             var vertical = Input.GetAxis("Mouse Y") ;
             var horizontal = Input.GetAxis("Mouse X");
-            Debug.Log(horizontal);
             transform.eulerAngles = Vector2.zero * speed;
             aim.m_TrackedObjectOffset.y += vertical * speed;
             aim.m_TrackedObjectOffset.x += horizontal * speed;

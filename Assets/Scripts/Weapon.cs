@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapons : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     [SerializeField] private KeyCode weaponHotKey;
     [SerializeField] private float fireDelay = 0.25f;
     private Inventory _inventory;
     private float fireTimer;
+    private WeaponAmmo ammo;
     public event Action OnFire = delegate {  };
     public KeyCode WeaponHotKey
     {
@@ -18,6 +19,7 @@ public class Weapons : MonoBehaviour
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
+        ammo = GetComponent<WeaponAmmo>();
     }
 
     void Update()
@@ -43,6 +45,10 @@ public class Weapons : MonoBehaviour
 
     private bool CanFire()
     {
+        if (ammo != null && ammo.isAmmoReady() == false)
+        {
+            return false;
+        }
         return fireTimer >= fireDelay;
     }
 }

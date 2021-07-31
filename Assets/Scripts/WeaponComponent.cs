@@ -2,16 +2,16 @@ using UnityEngine;
 
 public abstract class WeaponComponent : MonoBehaviour
 {
-    private Weapons weapon;
+    private Weapon _weapon;
     protected abstract void WeaponFired();
-    private void Awake()
+    protected virtual void Awake()
     {
-        weapon = GetComponent<Weapons>();
-        weapon.OnFire += WeaponFired;
+        _weapon = GetComponent<Weapon>();
+        _weapon.OnFire += WeaponFired;
     }
  
     private void OnDestroy()
     {
-        weapon.OnFire -= WeaponFired;
+        _weapon.OnFire -= WeaponFired;
     }
 }

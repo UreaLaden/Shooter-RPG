@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 287156169193890678}
   - component: {fileID: 287156169193890674}
   - component: {fileID: -1501406066699837599}
+  - component: {fileID: -3229064337391720192}
   m_Layer: 0
   m_Name: Beretta
   m_TagString: Untagged
@@ -673,6 +674,20 @@ MonoBehaviour:
   shotPoint: {fileID: 4754587136964481520}
   impact: {fileID: -1222662650496821517, guid: b44a4dd7ccb8bc24fb1e8e941eee8eac, type: 3}
   muzzleBlast: {fileID: -4919328465159879967, guid: ab6eff13475032b47b279510d5301eed, type: 3}
+--- !u!114 &-3229064337391720192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287156170470620843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068747a5562241ebb89937052d3d8c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: 24
+  maxAmmoPerClip: 6
 --- !u!1 &287156170470620845
 GameObject:
   m_ObjectHideFlags: 0

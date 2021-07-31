@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Weapons))]
+[RequireComponent(typeof(Weapon))]
 [RequireComponent(typeof(AudioSource))]
 public class WeaponSounds : WeaponComponent
 {
