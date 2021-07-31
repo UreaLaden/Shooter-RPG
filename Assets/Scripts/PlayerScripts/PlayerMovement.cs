@@ -14,11 +14,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float turnSmoothTime = 0.1f;
     private Animator animator;
     private CharacterController characterController;
-    private GetGrounded grounded;
     private float turnSmoothVelocity;
     bool isAiming;
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
+    private static readonly int Jump = Animator.StringToHash("Jump");
 
     private void Awake()
     {
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            animator.SetTrigger(Jump);
             verticalVelocity = jumpForce;
         }
     }
