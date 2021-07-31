@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class WeaponComponent : MonoBehaviour
 {
-    private Weapon _weapon;
+    protected Weapon _weapon;
     protected abstract void WeaponFired();
     protected virtual void Awake()
     {

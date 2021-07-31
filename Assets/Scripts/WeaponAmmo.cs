@@ -6,7 +6,8 @@ public class WeaponAmmo: WeaponComponent
 {
     [SerializeField] private int maxAmmo = 24;
     [SerializeField] private int maxAmmoPerClip = 6;
-    [SerializeField] private float reloadSpeed = .2f; 
+    [SerializeField] private float reloadSpeed = .1f;
+    private PlayerAnimations playerAnimations;
     private int ammoInClip;
     private int ammoRemainingNotInClip;
     
@@ -15,7 +16,7 @@ public class WeaponAmmo: WeaponComponent
     {
         ammoInClip = maxAmmoPerClip;
         ammoRemainingNotInClip = maxAmmo - ammoInClip;
-        
+        playerAnimations = FindObjectOfType<PlayerAnimations>();
         base.Awake();
     }
 
@@ -48,10 +49,10 @@ public class WeaponAmmo: WeaponComponent
         int ammoMissingFromClip = maxAmmo - ammoInClip;
         int ammoToMove = Math.Min(ammoMissingFromClip, ammoRemainingNotInClip);
 
+        playerAnimations.AnimateReload();
         while (ammoToMove > 0)
         {
             yield return new WaitForSeconds(reloadSpeed);
-            
             ammoInClip++;
             ammoRemainingNotInClip--;
             OnAmmoChanged();

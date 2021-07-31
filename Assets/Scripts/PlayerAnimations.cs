@@ -11,6 +11,7 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] private int shootingLayerIndex = 1;
     private float _currentWeight;
     private float _currentWeightVelocity;
+    private static readonly int Reload = Animator.StringToHash("Reload");
 
     private void Start()
     {
@@ -22,10 +23,16 @@ public class PlayerAnimations : MonoBehaviour
         ToggleAim();
     }
 
+    public void AnimateReload()
+    { 
+        animator.SetTrigger(Reload);
+    }
+
     private void ToggleAim()
     {
         _currentWeight = Mathf.SmoothDamp(_currentWeight, Input.GetMouseButton(1) ? 1 : 0, ref _currentWeightVelocity,
             drawWeaponSpeed);
         animator.SetLayerWeight(shootingLayerIndex, _currentWeight);
     }
+    
 }

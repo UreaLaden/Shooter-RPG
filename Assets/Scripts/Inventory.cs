@@ -6,14 +6,17 @@ using UnityEngine.Serialization;
 
 public class Inventory : MonoBehaviour
 {
-    public static event Action<Weapon> OnWeaponChange = delegate {  };
     [SerializeField] private Weapon[] weapons;
+    public static Inventory Instance;
+    public static event Action<Weapon> OnWeaponChange = delegate {  };
     
     public Weapon activeWeapon;
 
     private void Awake()
     {
+        Instance = this;
         SwitchToWeapon(weapons[0]);
+        
     }
     void Update()
     {

@@ -688,6 +688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAmmo: 24
   maxAmmoPerClip: 6
+  reloadSpeed: 0.1
 --- !u!1 &287156170470620845
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,15 +31,13 @@ public class WeaponProjectileLauncher : WeaponComponent
 
     protected override void WeaponFired()
     {
-        if (Input.GetMouseButton(1))
+        if (_weapon.isInAimMode)
         {
-            Ray targetPoint = camera.ScreenPointToRay(Input.mousePosition);
+            Ray targetPoint =  camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(targetPoint, out RaycastHit hitInfo, maxDistance, layerMask))
             {
                 var projectile = impact.Get<Projectile>(hitInfo.point, Quaternion.identity);
                 var muzzleFlash = muzzleBlast.Get<Projectile>(shotPoint.position, Quaternion.identity);
-                //Destroy(muzzleBlastPrefab, 2f);
-                //Destroy(prefab, .25f);
             }
         }
     }

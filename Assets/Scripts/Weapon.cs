@@ -15,7 +15,10 @@ public class Weapon : MonoBehaviour
     {
         get { return weaponHotKey; }
     }
-
+    public bool isInAimMode
+    {
+        get { return Input.GetMouseButton(1); }
+    } 
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
@@ -25,7 +28,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         fireTimer += Time.deltaTime;
-        if (Input.GetButtonDown("Fire1"))
+        if (isInAimMode && Input.GetMouseButtonDown(0))
         {
             if (CanFire())
             {

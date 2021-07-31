@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]private float rotationSpeed = 30f;
-    [SerializeField]private float moveSpeed = 5f;
-    private float turnSmoothVelocity;
+    [SerializeField] private float rotationSpeed = 30f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float verticalVelocity;
+    [SerializeField] private float gravity = 14.0f;
+    [SerializeField] private float jumpForce = 10.0f;
     [SerializeField] private Transform _camera;
     [SerializeField] private float turnSmoothTime = 0.1f;
     private Animator animator;
     private CharacterController characterController;
-    bool isAiming;
     private GetGrounded grounded;
+    private float turnSmoothVelocity;
+    bool isAiming;
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
 
@@ -22,34 +25,56 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponentInChildren<Animator>();
         characterController = GetComponent<CharacterController>();
-        grounded = GetComponent<GetGrounded>();
     }
 
     private void Update()
     {
-        isAiming = Input.GetMouseButton(1);
-        var mousePosX = Input.GetAxis("Mouse X") * rotationSpeed;
-        mousePosX = mousePosX < 0 ? -1 : mousePosX > 0 ? 1 : 0; 
-        var horizontal = isAiming ? mousePosX: Input.GetAxis("Horizontal")  ;
-        var vertical = Input.GetAxis("Vertical");
-        animator.SetFloat(Horizontal, horizontal); 
-        animator.SetFloat(Vertical, vertical);
-
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        if (direction.magnitude >= 0.1)
-        {
-            
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,ref turnSmoothVelocity,turnSmoothTime);
-            if (!isAiming)
-            {
-                transform.localRotation = Quaternion.Euler(0f,angle,0f) ;
-            }
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            characterController.Move(moveDir.normalized * (moveSpeed * Time.deltaTime));
-        }
-
+        ProcessJump();
+        ProcessMovement();
     }
 
+    private void ProcessJump()
+    {
+        verticalVelocity = characterController.isGrounded
+            ? verticalVelocity = -gravity * Time.deltaTime
+            : verticalVelocity -= gravity * Time.deltaTime;
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            verticalVelocity = jumpForce;
+        }
+    }
+
+    private void ProcessMovement()
+    {
+        var mousePosX = Input.GetAxis("Mouse X") * rotationSpeed;
+        mousePosX = mousePosX < 0 ? -1 : mousePosX > 0 ? 1 : 0;
+
+        var horizontal = isAiming ? mousePosX : Input.GetAxis("Horizontal");
+        var vertical = Input.GetAxis("Vertical");
+        isAiming = Input.GetMouseButton(1);
+
+        animator.SetFloat(Horizontal, horizontal);
+        animator.SetFloat(Vertical, vertical);
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 motion = new Vector3(0, verticalVelocity, 0) * Time.deltaTime;
+        bool isMoving = direction.magnitude >= 0.1;
+        if (isMoving)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(
+                transform.eulerAngles.y,
+                    targetAngle, ref turnSmoothVelocity,
+                    turnSmoothTime);
+            
+            if (!isAiming)
+            {
+               transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+            }
+
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * new Vector3(0, verticalVelocity, 1);
+            motion = moveDir.normalized * (moveSpeed * Time.deltaTime);
+        }
+        characterController.Move(motion);
+    }
 }
