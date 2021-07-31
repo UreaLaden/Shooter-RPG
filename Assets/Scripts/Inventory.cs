@@ -10,6 +10,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Weapon[] weapons;
     
     public Weapon activeWeapon;
+
+    private void Awake()
+    {
+        SwitchToWeapon(weapons[0]);
+    }
     void Update()
     {
         foreach (var weapon in weapons)
