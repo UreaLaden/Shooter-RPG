@@ -11,8 +11,9 @@ namespace a_player
         [UnityTest]
         public IEnumerator moves_right()
         {
-            Helpers.CreateEnvironment();
-            var player = Helpers.CreatePlayer();
+            yield return Helpers.LoadMovementTestScene();
+            
+            var player = Helpers.GetPlayer();
             player.PlayerInput.Horizontal.Returns(1f);
 
             float startingXPos = player.transform.position.x;
