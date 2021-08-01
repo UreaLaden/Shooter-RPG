@@ -8,7 +8,7 @@ public class EntityStateMachine : MonoBehaviour
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        var player = FindObjectOfType<PlayerMovement>();
+        var player = FindObjectOfType<Player>();
         _stateMachine = new StateMachine();
         var idle = new Idle();
         var chasePlayer = new ChasePlayer(_navMeshAgent);

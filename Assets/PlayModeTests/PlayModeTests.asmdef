@@ -4,7 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "NewAssembly-Scripts"
+        "Scripts.StateMachine",
+        "Scripts.PlayerScripts",
+        "Scripts.DebugTests"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -14,7 +16,7 @@
         "nunit.framework.dll",
         "NSubstitute.dll"
     ],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS"
     ],

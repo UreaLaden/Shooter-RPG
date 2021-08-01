@@ -6,38 +6,42 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 
+/// <summary>
+/// <para>Tests that a player with positive vertical input moves forward</para>
+/// </summary>
 public class with_positive_vertical_input
 {
     [UnityTest]
-    //Test: A player with positive vertical input moves forward
     public IEnumerator moves_forward()
     {
-        //Add lighting to the scene
-        GameObject light = new GameObject("Light");
-        var lightComp = light.AddComponent<Light>();
-        lightComp.type = LightType.Directional;
-        light.transform.localRotation = Quaternion.Euler(50,-30,0);
-        light.transform.position = new Vector3(0, 5, 0);
-        
-        var floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        floor.transform.localScale = new Vector3(50, 0.1f, 50);
-        floor.transform.position = Vector3.zero - Vector3.one;
-        floor.GetComponent<Renderer>().material.SetColor("_Color",Color.blue);
-        
-        var playerGameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        playerGameObject.GetComponent<Renderer>().material.SetColor("_Color",Color.red);
-        playerGameObject.AddComponent<CharacterController>();
-        
-        _Player player = playerGameObject.AddComponent<_Player>();
-        playerGameObject.transform.position = new Vector3(0, 1.3f, 0);
+        Helpers.CreateEnvironment();
+        var player = Helpers.CreatePlayer();
+        player.PlayerInput.Vertical.Returns(1f);
 
-        var testPlayerInput = Substitute.For<IPlayerInput>();
-        testPlayerInput.Vertical.Returns(1f);
-        
         float startingZPos = player.transform.position.z;
+        Debug.Log($"Starting Pos Z {startingZPos}");
         yield return new WaitForSeconds(5f);
         float endingZPos = player.transform.position.z;
-        
+        Debug.Log($"Ending Pos Z {endingZPos}");
+
         Assert.Greater(endingZPos, startingZPos);
+    }
+}
+
+public class with_negative_mouse_x
+{
+    [UnityTest]
+    public IEnumerator turns_left()
+    {
+        Helpers.CreateEnvironment();
+        var player = Helpers.CreatePlayer();
+
+        player.PlayerInput.MouseX.Returns(-1f);
+
+        var originalRotation = player.transform.rotation;
+        yield return new WaitForSeconds(0.5f);
+
+        float turnAmount = Helpers.CalculateTurn(originalRotation, player.transform.rotation);
+        Assert.Less(turnAmount, 0);
     }
 }

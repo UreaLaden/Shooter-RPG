@@ -1,0 +1,17 @@
+{
+    "name": "Scripts.StateMachine",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4233e0fee33727d48b9603b8977f06d5",
+        "GUID:dcf62a332555a2742a9c232a15762bc0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
