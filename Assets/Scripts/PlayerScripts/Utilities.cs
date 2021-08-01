@@ -11,6 +11,8 @@ public class Utilities
         Die,
         Vertical,
         Jump,
-        Horizontal
+        Horizontal,
+        ForceTransition,
+        Landed
     }
 }

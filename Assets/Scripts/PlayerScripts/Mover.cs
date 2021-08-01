@@ -7,7 +7,7 @@ public class Mover : IMover
     private readonly Player _player;
     private readonly CharacterController _characterController;
     private readonly Animator _animator;
-    private float _verticalVelocity;
+    public float _verticalVelocity;
     public Mover(Player player)
     {
         _player = player;
@@ -21,16 +21,26 @@ public class Mover : IMover
         ProcessJump();
         ProcessMovement();
     }
+
     private void ProcessJump()
     {
-        _verticalVelocity = _player._characterController.isGrounded
-            ? _verticalVelocity = -_player.Gravity * Time.deltaTime
-            : _verticalVelocity -= _player.Gravity * Time.deltaTime;
-
-        if (_player.PlayerInput.Jumped)
+        if (_player.jumped)
         {
-            _player.animator.SetTrigger(Utilities.AnimationTriggers.Jump.ToString());
+            Debug.Log("Player probably jumped");
             _verticalVelocity = _player.JumpForce;
+            _player.jumped = false;
+        }
+        else
+        {
+            if (_player.isFalling)
+            {
+                Debug.Log("Should be falling");
+                _verticalVelocity -= _player.Gravity * Time.deltaTime;
+            }
+            else
+            {
+                _verticalVelocity = -_player.Gravity * Time.deltaTime;
+            }
         }
     }
 

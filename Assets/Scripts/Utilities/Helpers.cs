@@ -51,4 +51,17 @@ public static class Helpers
         while(operation.isDone == false)
             yield return null;
     }
+    
+    /// <summary>
+    /// <para> Creates a sphere at the players feet to be used as a ground check </para>
+    /// </summary>
+    /// <param name="_collider">Capsule Collider attached to the GameObject</param>
+    /// <param name="groundLayer">Layer that should be perceived as the ground</param>
+    /// <returns>Boolean verifying whether player is on the ground or not</returns>
+    public static bool IsGrounded(CapsuleCollider _collider, LayerMask groundLayer)
+    {
+        float radius = _collider.radius * .9f;
+        Vector3 pos = _collider.gameObject.transform.position + Vector3.up * (radius * .9f);
+        return Physics.CheckSphere(pos, radius, groundLayer);
+    }
 }
