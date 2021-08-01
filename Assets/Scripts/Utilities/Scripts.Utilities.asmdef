@@ -1,0 +1,18 @@
+{
+    "name": "Scripts.Utilities",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2bcc692c99bdd2f4580f6994692e3f78",
+        "GUID:151048da811f3a24d81ee0af34644cc5",
+        "GUID:dcf62a332555a2742a9c232a15762bc0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

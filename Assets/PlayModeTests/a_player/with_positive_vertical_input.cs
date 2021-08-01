@@ -5,43 +5,80 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-
-/// <summary>
-/// <para>Tests that a player with positive vertical input moves forward</para>
-/// </summary>
-public class with_positive_vertical_input
+namespace a_player
 {
-    [UnityTest]
-    public IEnumerator moves_forward()
+    /// <summary>
+    /// <para>Tests that a player with positive vertical input moves forward</para>
+    /// </summary>
+    public class with_positive_vertical_input
     {
-        Helpers.CreateEnvironment();
-        var player = Helpers.CreatePlayer();
-        player.PlayerInput.Vertical.Returns(1f);
+        [UnityTest]
+        public IEnumerator moves_forward()
+        {
+            yield return Helpers.LoadMovementTestScene();
+            var player = Helpers.GetPlayer();
+            player.PlayerInput.Vertical.Returns(1f);
 
-        float startingZPos = player.transform.position.z;
-        Debug.Log($"Starting Pos Z {startingZPos}");
-        yield return new WaitForSeconds(5f);
-        float endingZPos = player.transform.position.z;
-        Debug.Log($"Ending Pos Z {endingZPos}");
+            float startingZPos = player.transform.position.z;
+            yield return new WaitForSeconds(5f);
+            float endingZPos = player.transform.position.z;
 
-        Assert.Greater(endingZPos, startingZPos);
+            Assert.Greater(endingZPos, startingZPos);
+        }
     }
-}
-
-public class with_negative_mouse_x
-{
-    [UnityTest]
-    public IEnumerator turns_left()
+    
+    public class with_negative_vertical_input
     {
-        Helpers.CreateEnvironment();
-        var player = Helpers.CreatePlayer();
+        [UnityTest]
+        public IEnumerator moves_backward()
+        {
+            yield return Helpers.LoadMovementTestScene();
+            var player = Helpers.GetPlayer();
+            player.PlayerInput.Vertical.Returns(-1f);
 
-        player.PlayerInput.MouseX.Returns(-1f);
+            float startingZPos = player.transform.position.z;
+            yield return new WaitForSeconds(.5f);
+            float endingZPos = player.transform.position.z;
 
-        var originalRotation = player.transform.rotation;
-        yield return new WaitForSeconds(0.5f);
-
-        float turnAmount = Helpers.CalculateTurn(originalRotation, player.transform.rotation);
-        Assert.Less(turnAmount, 0);
+            Assert.Less(endingZPos, startingZPos);
+        }
     }
+
+    public class with_negative_mouse_x
+    {
+        [UnityTest]
+        public IEnumerator turns_left()
+        {
+            yield return Helpers.LoadMovementTestScene();
+            var player = Helpers.GetPlayer();
+
+            player.PlayerInput.MouseX.Returns(-1f);
+
+            var originalRotation = player.transform.rotation;
+            yield return new WaitForSeconds(0.5f);
+
+            float turnAmount = Helpers.CalculateTurn(originalRotation, player.transform.rotation);
+            Assert.Less(turnAmount, 0);
+        }
+    }
+    
+    public class with_positive_mouse_x
+    {
+        [UnityTest]
+        public IEnumerator turns_right()
+        {
+            yield return Helpers.LoadMovementTestScene();
+            var player = Helpers.GetPlayer();
+
+            player.PlayerInput.MouseX.Returns(1f);
+
+            var originalRotation = player.transform.rotation;
+            yield return new WaitForSeconds(0.5f);
+
+            float turnAmount = Helpers.CalculateTurn(originalRotation, player.transform.rotation);
+            Assert.Greater(turnAmount, 0);
+        }
+    }
+    
+    
 }

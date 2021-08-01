@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -11,7 +8,7 @@ public class WeaponProjectileLauncher : WeaponComponent
     [SerializeField] private Transform shotPoint;
     [SerializeField] private PooledMonoBehaviour impact;
     [SerializeField] private PooledMonoBehaviour muzzleBlast;
-    private Camera camera;
+    private Camera _camera;
 
     private void OnEnable()
     {
@@ -26,14 +23,14 @@ public class WeaponProjectileLauncher : WeaponComponent
 
     void OnCameraUpdated(CinemachineBrain brain)
     {
-        camera = brain.OutputCamera;
+        _camera = brain.OutputCamera;
     }
 
     protected override void WeaponFired()
     {
         if (_weapon.isInAimMode)
         {
-            Ray targetPoint =  camera.ScreenPointToRay(Input.mousePosition);
+            Ray targetPoint =  _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(targetPoint, out RaycastHit hitInfo, maxDistance, layerMask))
             {
                 var projectile = impact.Get<Projectile>(hitInfo.point, Quaternion.identity);

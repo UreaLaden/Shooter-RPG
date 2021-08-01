@@ -1,4 +1,4 @@
-public class Jump: IState
+public class InitiateJump: IState
 {
     public void Tick()
     {

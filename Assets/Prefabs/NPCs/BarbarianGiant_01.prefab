@@ -1608,6 +1608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3328258815231228947}
   - component: {fileID: 3447144073144295309}
+  - component: {fileID: 453921936}
   m_Layer: 0
   m_Name: Character_BarbarianGiant_01
   m_TagString: Untagged
@@ -1730,6 +1731,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00000017881393, y: 0.9082171, z: 0.035351098}
     m_Extent: {x: 1.4515893, y: 0.9894341, z: 0.41817784}
   m_DirtyAABB: 0
+--- !u!95 &453921936
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331076058375558615}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a50cd06a0668d1a418d586a2944e3ed5, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3331097162280105569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,8 +1762,10 @@ GameObject:
   - component: {fileID: 3416853805388699267}
   - component: {fileID: -4130632354047594236}
   - component: {fileID: 577501001454220232}
+  - component: {fileID: 1928382395}
+  - component: {fileID: 1928382396}
   m_Layer: 0
-  m_Name: Character_BR_BarbarianGiant_01
+  m_Name: BarbarianGiant_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1756,7 +1778,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3331097162280105569}
-  m_LocalRotation: {x: -0, y: -0.39990127, z: -0, w: 0.9165582}
+  m_LocalRotation: {x: 0, y: -0.39990118, z: 0, w: 0.9165582}
   m_LocalPosition: {x: 25.3031, y: -1.8057709, z: 44.76922}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1785,7 +1807,7 @@ Animator:
   m_GameObject: {fileID: 3331097162280105569}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a50cd06a0668d1a418d586a2944e3ed5, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2e82df3e06f4c0b43a7b3f5086dc3722, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1828,6 +1850,31 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1928382395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331097162280105569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c395d3df915047af97350a103930e519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 5
+--- !u!114 &1928382396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331097162280105569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1342bc13439c93946ac4e24b997e3070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3331155365714359433
 GameObject:
   m_ObjectHideFlags: 0
