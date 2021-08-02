@@ -29,7 +29,6 @@ public class InitiateJump : IState
 
     public void OnEnter()
     {
-        Debug.Log("Entered Initiate Jump");
         _animator.SetTrigger(Utilities.AnimationTriggers.Jump.ToString());
     }
 

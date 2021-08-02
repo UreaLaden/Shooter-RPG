@@ -4,10 +4,11 @@ using UnityEngine.AI;
 
 public class EntityStateMachine : MonoBehaviour
 {
+    public Type CurrentStateType => _stateMachine.CurrentState.GetType();
     private StateMachine _stateMachine;
     private NavMeshAgent _navMeshAgent;
     private Entity _entity;
-    public Type CurrentStateType => _stateMachine.CurrentState.GetType();
+    private ITrack _tracker;
     private void Awake()
     {
         var player = FindObjectOfType<Player>();
@@ -20,12 +21,8 @@ public class EntityStateMachine : MonoBehaviour
         var attack = new Attack();
         var dead = new Dead(_entity);
         
-        
-        _stateMachine.AddTransition(
-            idle,
-            chasePlayer,
-            ()=> DistanceFlat(_navMeshAgent.transform.position,player.transform.position) < 5f);
-        
+        _tracker = new Tracker(player.transform,_entity);
+       
         _stateMachine.AddAnyTransition(
             dead,
             () => _entity.Health <= 0);
@@ -45,5 +42,8 @@ public class EntityStateMachine : MonoBehaviour
     private void Update()
     {
         _stateMachine.Tick();
+        _tracker.Tick();
     }
+    
+    
 }

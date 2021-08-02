@@ -24,7 +24,6 @@ public class ForceTransition:IState
 
     public void OnEnter()
     {
-        Debug.Log("Entered Force Transition");
     }
 
     public void OnExit()

@@ -22,7 +22,6 @@ public class Land : IState
 
     public void OnEnter()
     {
-        Debug.Log("Entered Land");
         _animator.SetTrigger(Utilities.AnimationTriggers.Landed.ToString());
     }
 
