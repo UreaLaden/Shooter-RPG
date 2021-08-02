@@ -48,10 +48,10 @@ public static class Helpers
     public static IEnumerator LoadEntityStateMachineTestScene()
     {
         var operation = SceneManager.LoadSceneAsync(Utilities.Scenes.EntityStateMachineTests.ToString());
-        while(operation.isDone == false)
+        while (operation.isDone == false)
             yield return null;
     }
-    
+
     /// <summary>
     /// <para> Creates a sphere at the players feet to be used as a ground check </para>
     /// </summary>
@@ -63,5 +63,42 @@ public static class Helpers
         float radius = _collider.radius * .9f;
         Vector3 pos = _collider.gameObject.transform.position + Vector3.up * (radius * .9f);
         return Physics.CheckSphere(pos, radius, groundLayer);
+    }
+
+    /// <summary>
+    /// <para>This allows a navMeshAgent to slowly manipulate tight turns</para>
+    /// </summary>
+    /// <param name="_navMeshAgent">The NavMeshAgent executing the movement</param>
+    /// <param name="gameObject">The agent the navmesh is connected to</param>
+    public static void NegotiateTurn(NavMeshAgent _navMeshAgent, GameObject gameObject)
+    {
+        if (_navMeshAgent.hasPath)
+        {
+            Vector3 toTarget = _navMeshAgent.steeringTarget - gameObject.transform.position;
+            float turnAngle = Vector3.Angle(gameObject.transform.forward, toTarget);
+            _navMeshAgent.acceleration = turnAngle * _navMeshAgent.speed;
+        }
+    }
+    /// <summary>
+    /// a NavMeshAgent extension method to get the remaining distance at any moment, or any point of the path
+    /// </summary>
+    /// <param name="navMeshAgent">The Agent</param>
+    /// <returns>The agents remaining distance</returns>
+    public static float GetPathRemainingDistance(NavMeshAgent navMeshAgent)
+    {
+        if (navMeshAgent.pathPending ||
+            navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid ||
+            navMeshAgent.path.corners.Length == 0)
+        {
+            return -1f;
+        }
+
+        float distance = 0.0f;
+        for (int i = 0; i < navMeshAgent.path.corners.Length-1; i++)
+        {
+            distance += Vector3.Distance(navMeshAgent.path.corners[i], navMeshAgent.path.corners[i + 1]);
+        }
+
+        return distance;
     }
 }

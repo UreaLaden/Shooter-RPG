@@ -33,7 +33,7 @@ namespace state_machine
             player.transform.position = entityStateMachine.transform.position + new Vector3(4.9f, 0f, 0f);
             Debug.Log(Vector3.Distance(entityStateMachine.transform.position,player.transform.position) + $"$State: {entityStateMachine.CurrentStateType}");
             yield return null;
-            Assert.AreEqual(typeof(ChasePlayer),entityStateMachine.CurrentStateType);
+            Assert.AreEqual(typeof(Pursue),entityStateMachine.CurrentStateType);
         }
         
         [UnityTest]
