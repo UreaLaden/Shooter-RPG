@@ -17,7 +17,7 @@ public class EntityStateMachine : MonoBehaviour
         _stateMachine = new StateMachine();
         
         var idle = new Idle();
-        var chasePlayer = new ChasePlayer(_navMeshAgent,player);
+        var chasePlayer = new Pursue(_navMeshAgent,player);
         var attack = new Attack();
         var dead = new Dead(_entity);
         

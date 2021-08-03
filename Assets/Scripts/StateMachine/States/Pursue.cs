@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChasePlayer : IState
+public class Pursue : IState
 {
     private readonly NavMeshAgent _navMeshAgent;
     private readonly Player _player;
 
-    public ChasePlayer(NavMeshAgent agent, Player player)
+    public Pursue(NavMeshAgent agent, Player player)
     {
         _navMeshAgent = agent;
         _player = player;
