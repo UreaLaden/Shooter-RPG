@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DeliverProduce : GoapAction
+public class HarvestWater : GoapAction
 {
-    [SerializeField]private float workDuration = 2;
-    private bool completed = false;
-    private float startTime = 0;
+    [SerializeField] private float workDuration = 5f;
+    private bool completed;
+    private float startTime = 0f;
     private NavMeshAgent _navMeshAgent;
-    
-    public DeliverProduce()
+
+    public HarvestWater()
     {
-        addPrecondition("hasProduce",true);
-        addEffect("doJob",true);
-        name = "Harvest";
+        addPrecondition("canRest",false);
+        addEffect("hasWater",true);
+        name = "Harvest Water";
     }
     public override void reset()
     {
         completed = false;
-        startTime = 0;
+        startTime = 0f;
     }
 
     public override bool isDone()
@@ -35,22 +35,20 @@ public class DeliverProduce : GoapAction
     public override bool perform(GameObject agent)
     {
         float remainingDistance = Helpers.GetPathRemainingDistance(agent.GetComponent<NavMeshAgent>());
-        if (remainingDistance > 2)
+        if (remainingDistance > 2f)
         {
             startTime = Time.time;
         }
 
         if (startTime == 0)
         {
-            Debug.Log($"Starting {name}");
+            Debug.Log("Collecting Water");
             startTime = Time.time;
         }
 
         if (Time.time - startTime > workDuration)
         {
-            Debug.Log($"Finished: {name}");
-            
-            TownInventory.Instance.onHandProduceAmount += 2;
+            Debug.Log("Done gathering water");
             completed = true;
         }
 

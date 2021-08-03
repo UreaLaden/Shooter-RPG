@@ -9,7 +9,6 @@ public class DeliverBread : GoapAction
     private bool completed = false;
     private float startTime = 0;
     public float workDuration = 2;
-    private NavMeshAgent _navMeshAgent;
 
     public DeliverBread()
     {
@@ -39,8 +38,7 @@ public class DeliverBread : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        _navMeshAgent = agent.GetComponent<NavMeshAgent>();
-        var remainingDistance = Helpers.GetPathRemainingDistance(_navMeshAgent);
+        var remainingDistance = Helpers.GetPathRemainingDistance(agent.GetComponent<NavMeshAgent>());
         if (remainingDistance > 2)
         {
             startTime = Time.time;
@@ -54,7 +52,7 @@ public class DeliverBread : GoapAction
         if (Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            this.GetComponent<TownInventory>().breadAmount -= 5;
+            this.GetComponent<TownInventory>().onHandBreadAmount -= 5;
             completed = true;
         }
         return true;

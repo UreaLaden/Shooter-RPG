@@ -4,13 +4,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Harvest : GoapAction
+public class HarvestProduce : GoapAction
 {
     private bool completed = false;
     private float startTime = 0;
     public float workDuration = 2;
     private NavMeshAgent _navMeshAgent;
-    public Harvest()
+    public HarvestProduce()
     {
         addPrecondition("canRest",false);
         addEffect("hasProduce", true);

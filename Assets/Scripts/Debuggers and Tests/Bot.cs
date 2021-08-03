@@ -32,13 +32,13 @@ public class Bot : MonoBehaviour
             Vector3.Angle(this.transform.forward, this.transform.TransformVector(target.transform.forward));
         float toTarget = Vector3.Angle(this.transform.forward, this.transform.TransformVector(targetDirection));
         
-        if ((toTarget > 90 && relativeHeading < 20) || target.GetComponent<Player>().MoveSpeed < 0.01f)
+        if ((toTarget > 90 && relativeHeading < 20) )
         {
             Seek(target.transform.position);
             return;
         }
-        float lookAhead = targetDirection.magnitude / (_agent.speed + target.GetComponent<Player>().MoveSpeed);
-        Seek(target.transform.position + target.transform.forward * lookAhead );
+        //float lookAhead = targetDirection.magnitude / (_agent.speed + target.GetComponent<Player>().MoveSpeed);
+        Seek(target.transform.position + target.transform.forward  );
     }
     private void Update()
     {

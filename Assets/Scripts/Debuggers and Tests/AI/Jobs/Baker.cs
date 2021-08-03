@@ -27,10 +27,10 @@ public class Baker : MonoBehaviour, IGoap
     public HashSet<KeyValuePair<string, object>> GetWorldState()
     {
         HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
-        worldData.Add(new KeyValuePair<string, object>("hasStock", (TownInventory.Instance.produceAmount > 4)));
-        worldData.Add(new KeyValuePair<string, object>("hasFlour", (TownInventory.Instance.produceAmount > 1)));
-        worldData.Add(new KeyValuePair<string, object>("canRest", (TownInventory.Instance.produceAmount <= 1 && TownInventory.Instance.produceAmount < 2 )));
-        worldData.Add(new KeyValuePair<string, object>("hasDelivery", (TownInventory.Instance.breadAmount > 5)));
+        worldData.Add(new KeyValuePair<string, object>("hasStock", (TownInventory.Instance.onHandProduceAmount > 4)));
+        worldData.Add(new KeyValuePair<string, object>("hasFlour", (TownInventory.Instance.onHandProduceAmount > 1)));
+        worldData.Add(new KeyValuePair<string, object>("hasDelivery", (TownInventory.Instance.onHandBreadAmount > 5)));
+        worldData.Add(new KeyValuePair<string, object>("canRest", (TownInventory.Instance.onHandProduceAmount <= 1 && TownInventory.Instance.onHandProduceAmount < 2 )));
         return worldData;
     }
 

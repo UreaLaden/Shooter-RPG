@@ -52,8 +52,8 @@ public class PickupFlour : GoapAction
         if (distanceRemaining < 1.2f && Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            TownInventory.Instance.produceAmount += amountToHarvest;
-            TownInventory.Instance.produceAmount -= amountToHarvest;
+            TownInventory.Instance.onHandProduceAmount += amountToHarvest;
+            TownInventory.Instance.onHandProduceAmount -= amountToHarvest;
             completed = true;
         }
 

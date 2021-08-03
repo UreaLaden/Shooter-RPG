@@ -50,8 +50,8 @@ public class BakeBread : GoapAction
         if (Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            TownInventory.Instance.produceAmount -= breadCost;
-            TownInventory.Instance.breadAmount += 1;
+            TownInventory.Instance.onHandProduceAmount -= breadCost;
+            TownInventory.Instance.onHandBreadAmount += 1;
             completed = true;
         }
 
