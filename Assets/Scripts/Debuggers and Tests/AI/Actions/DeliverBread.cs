@@ -1,23 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using NSubstitute.ReturnsExtensions;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BakeBread : GoapAction
+public class DeliverBread : GoapAction
 {
     private bool completed = false;
     private float startTime = 0;
     public float workDuration = 2;
-    [SerializeField] private int breadCost = 2;
+    private NavMeshAgent _navMeshAgent;
 
-    public BakeBread()
+    public DeliverBread()
     {
-        addPrecondition("hasFlour",true);//if this true action will execute
-        addEffect("doJob",true); //matches the goalstate
-        name = "BakeBread"; //allows us to debug if needed
+        addPrecondition("hasDelivery",true);
+        addEffect("doJob",true);
+        name = "DeliverBread";
     }
-
     public override void reset()
     {
         completed = false;
@@ -29,6 +28,10 @@ public class BakeBread : GoapAction
         return completed;
     }
 
+    public override bool requiresInRange()
+    {
+        return true;
+    }
     public override bool checkProceduralPrecondition(GameObject agent)
     {
         return true;
@@ -36,8 +39,9 @@ public class BakeBread : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        var _agent = agent.GetComponent<NavMeshAgent>();
-        if (Helpers.GetPathRemainingDistance(_agent) > 2)
+        _navMeshAgent = agent.GetComponent<NavMeshAgent>();
+        var remainingDistance = Helpers.GetPathRemainingDistance(_navMeshAgent);
+        if (remainingDistance > 2)
         {
             startTime = Time.time;
         }
@@ -50,20 +54,10 @@ public class BakeBread : GoapAction
         if (Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            TownInventory.Instance.produceAmount -= breadCost;
-            TownInventory.Instance.breadAmount += 1;
+            this.GetComponent<TownInventory>().breadAmount -= 5;
             completed = true;
         }
-
         return true;
     }
 
-    /// <summary>
-    /// Do i need to be at the location in order to perform my task?
-    /// </summary>
-    /// <returns></returns>
-    public override bool requiresInRange()
-    {
-        return true;
-    }
 }

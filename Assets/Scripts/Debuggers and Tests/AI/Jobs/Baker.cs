@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
-public class Worker : MonoBehaviour, IGoap
+public class Baker : MonoBehaviour, IGoap
 {
-    public NavMeshAgent _navMeshAgent;
-    public Vector3 _previousDestination;
-    public BotInventory _inventory;
-    [SerializeField]private GoapAction _nextAction;
+    private GoapAction _nextAction;
+    private GoapAction _rest;
+    private NavMeshAgent _navMeshAgent;
+    private Vector3 _previousDestination;
+    HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
     void Start()
     {
-        _navMeshAgent = this.GetComponent<NavMeshAgent>();
-        _inventory = this.GetComponent<BotInventory>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _previousDestination = transform.position;
+        _rest = GetComponent<Rest>();
     }
 
     private void Update()
@@ -25,19 +27,23 @@ public class Worker : MonoBehaviour, IGoap
     public HashSet<KeyValuePair<string, object>> GetWorldState()
     {
         HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
-        worldData.Add(new KeyValuePair<string, object>("hasFlour", (_inventory.flourLevel > 1)));
+        worldData.Add(new KeyValuePair<string, object>("hasStock", (TownInventory.Instance.produceAmount > 4)));
+        worldData.Add(new KeyValuePair<string, object>("hasFlour", (TownInventory.Instance.produceAmount > 1)));
+        worldData.Add(new KeyValuePair<string, object>("canRest", (TownInventory.Instance.produceAmount <= 1 && TownInventory.Instance.produceAmount < 2 )));
+        worldData.Add(new KeyValuePair<string, object>("hasDelivery", (TownInventory.Instance.breadAmount > 5)));
         return worldData;
     }
 
     public HashSet<KeyValuePair<string, object>> CreateGoalState()
     {
-        HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
         goal.Add(new KeyValuePair<string, object>("doJob", true)); // new goal state
         return goal;
     }
 
     public bool MoveAgent(GoapAction nextAction)
     {
+        float remainingDistance = Helpers.GetPathRemainingDistance(_navMeshAgent);
+        _nextAction = nextAction;
         // if we don't need to move anywhere
         if (_previousDestination == nextAction.target.transform.position)
         {
@@ -45,10 +51,6 @@ public class Worker : MonoBehaviour, IGoap
             return true;
         }
 
-        _nextAction = nextAction;
-        float remainingDistance = Helpers.GetPathRemainingDistance(_navMeshAgent);
-        //Debug.Log($"Distance to next action ({nextAction.target}): {remainingDistance}");
-        Debug.Log($"Next Action in range: {remainingDistance < 2f}");
         _navMeshAgent.SetDestination(nextAction.target.transform.position);
         if (_navMeshAgent.hasPath && remainingDistance < 2)
         {
@@ -71,22 +73,24 @@ public class Worker : MonoBehaviour, IGoap
 
     public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
     {
-        Debug.Log("Plan Failed");
+        Debug.Log($"Can't bake anymore bread. Gonna rest for a bit at home");
+        MoveAgent(_rest);
+        _rest.perform(_navMeshAgent.gameObject);
     }
 
     public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
     {
-        Debug.Log("Plan Found");
+        Debug.Log($"{name} Plan Found: {goal}");
     }
 
     public void ActionsFinished()
     {
-        Debug.Log("Mission Complete");
+        Debug.Log($"{name} Mission Complete");
     }
 
     public void PlanAborted(GoapAction aborter)
     {
-        Debug.Log("Mission aborted");
+        Debug.Log($"{name} Mission aborted: {aborter}");
     }
-
 }
+

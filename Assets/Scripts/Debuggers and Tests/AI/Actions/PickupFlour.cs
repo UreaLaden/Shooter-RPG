@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class PickupFlour : GoapAction
 {
-    private bool completed = false;
-    private float startTime = 0;
-    public float workDuration = 2; //seconds
-    
+    [SerializeField]private float workDuration = 2; //seconds
+    [SerializeField]private int amountToHarvest = 3;
+    private bool completed;
+    private float startTime;
+
     public PickupFlour()
     {
+        addPrecondition("hasStock",true);//when this is true we can pickup flour
         addPrecondition("hasFlour",false); //Action Takes place when hasFlour is false
         addEffect("hasFlour",true); //Adding this effect allows bakeBread to execute
         name = "PickupFour"; // name for debugging
@@ -49,7 +52,8 @@ public class PickupFlour : GoapAction
         if (distanceRemaining < 1.2f && Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            this.GetComponent<BotInventory>().flourLevel += 5;
+            TownInventory.Instance.produceAmount += amountToHarvest;
+            TownInventory.Instance.produceAmount -= amountToHarvest;
             completed = true;
         }
 

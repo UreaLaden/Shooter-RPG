@@ -66,7 +66,7 @@ public sealed class GoapAgent : MonoBehaviour {
 			// get the world state and the goal we want to plan for
 			HashSet<KeyValuePair<string,object>> worldState = dataProvider.GetWorldState();
 			HashSet<KeyValuePair<string,object>> goal = dataProvider.CreateGoalState();
-
+			Debug.Log("From Idle: " + worldState);
 			// Plan
 			Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goal);
 			if (plan != null) {
@@ -102,7 +102,7 @@ public sealed class GoapAgent : MonoBehaviour {
 			}
 
 			// get the agent to move itself
-			Debug.Log("Move to do: " + action.name);
+			Debug.Log("Move to " + action.name);
 			if ( dataProvider.MoveAgent(action) ) {
 				fsm.popState();
 			}
