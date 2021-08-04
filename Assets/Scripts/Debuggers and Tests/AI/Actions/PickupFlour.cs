@@ -14,7 +14,6 @@ public class PickupFlour : GoapAction
     public PickupFlour()
     {
         addPrecondition("hasStock",true);//when this is true we can pickup flour
-        addPrecondition("hasFlour",false); //Action Takes place when hasFlour is false
         addEffect("hasFlour",true); //Adding this effect allows bakeBread to execute
         name = "PickupProduce"; // name for debugging
     }

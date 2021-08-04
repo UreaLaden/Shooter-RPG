@@ -38,9 +38,7 @@ public class Farmer : MonoBehaviour, IGoap
 
     public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
     {
-        Debug.Log($"Farmer canRest? {TownInventory.Instance.storedProduceAmount >= TownInventory.Instance.produceCapacity}");
-        MoveAgent(_rest);
-        _rest.perform(gameObject);
+        Debug.Log($"Something wrong with {name}");
     }
 
     public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)

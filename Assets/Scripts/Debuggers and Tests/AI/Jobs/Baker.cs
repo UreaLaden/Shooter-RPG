@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using UnityEngineInternal;
 
 public class Baker : MonoBehaviour, IGoap
 {
@@ -74,23 +75,22 @@ public class Baker : MonoBehaviour, IGoap
     public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
     {
         //Debug.Log($"Can't bake anymore bread. Gonna rest for a bit at home");
-        MoveAgent(_rest);
-        _rest.perform(_navMeshAgent.gameObject);
+        Debug.Log($"Something wrong with {name}");
     }
 
     public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
     {
-        //Debug.Log($"{name} Plan Found task");
+        Debug.Log($"{name} Plan Found task");
     }
 
     public void ActionsFinished()
     {
-        //Debug.Log($"{name} Mission Complete");
+        Debug.Log($"{name} Mission Complete");
     }
 
     public void PlanAborted(GoapAction aborter)
     {
-        //Debug.Log($"{name} Mission aborted: {aborter}");
+        Debug.Log($"{name} Mission aborted: {aborter}");
     }
 }
 

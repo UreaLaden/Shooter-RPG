@@ -12,6 +12,7 @@ public class TownInventoryUI : MonoBehaviour
     [SerializeField] private TMP_Text _carriedProduce;
     [SerializeField] private TMP_Text _carriedBread;
     [SerializeField] private TMP_Text _carriedWater;
+    
     void Start()
     {
     }
@@ -25,5 +26,7 @@ public class TownInventoryUI : MonoBehaviour
         _carriedProduce.text = "Carried Produce: " + TownInventory.Instance.onHandFlourAmount;
         _carriedBread.text = "Carried Bread: " + TownInventory.Instance.onHandBreadAmount;
         _carriedWater.text = "Carried Water: " + TownInventory.Instance.onHandWaterAmount;
+        
+        
     }
 }
