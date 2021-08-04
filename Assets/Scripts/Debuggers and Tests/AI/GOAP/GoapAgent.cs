@@ -66,7 +66,6 @@ public sealed class GoapAgent : MonoBehaviour {
 			// get the world state and the goal we want to plan for
 			HashSet<KeyValuePair<string,object>> worldState = dataProvider.GetWorldState();
 			HashSet<KeyValuePair<string,object>> goal = dataProvider.CreateGoalState();
-			Debug.Log("From Idle: " + worldState);
 			// Plan
 			Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goal);
 			if (plan != null) {

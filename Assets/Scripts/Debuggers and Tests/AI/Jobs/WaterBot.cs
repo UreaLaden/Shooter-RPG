@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,11 @@ using UnityEngine.AI;
 
 public class WaterBot : MonoBehaviour,IGoap
 {
-    private HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
+    
     private GoapAction _nextAction;
     private GoapAction _rest;
     private Vector3 _previousDestination;
-    private NavMeshAgent _navMeshAgent;
+    public NavMeshAgent _navMeshAgent;
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -21,24 +22,29 @@ public class WaterBot : MonoBehaviour,IGoap
         Helpers.NegotiateTurn(_navMeshAgent,gameObject);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position,5f);
+    }
+
     public HashSet<KeyValuePair<string, object>> GetWorldState()
     {
         HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
-        worldData.Add(new KeyValuePair<string, object>("hasWater",TownInventory.Instance.onHandWaterAmount > 1));
-        worldData.Add(new KeyValuePair<string, object>("hasDelivery",TownInventory.Instance.storedWaterAmount > 5f ));
-        worldData.Add(new KeyValuePair<string, object>("canRest",TownInventory.Instance.deliveredWater >= TownInventory.Instance.waterCapacity));
+        worldData.Add(new KeyValuePair<string, object>("canRest", TownInventory.Instance.storedWaterAmount >= TownInventory.Instance.waterCapacity));
         return worldData;
     }
 
     public HashSet<KeyValuePair<string, object>> CreateGoalState()
     {
+        HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
         goal.Add(new KeyValuePair<string, object>("doJob", true));
         return goal;
     }
 
     public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
     {
-        Debug.Log(name + " failed his task");
+       Debug.Log($"Waterbot didn't get it done: {failedGoal}");
     }
 
     public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
@@ -64,7 +70,7 @@ public class WaterBot : MonoBehaviour,IGoap
         }
 
         _navMeshAgent.SetDestination(nextAction.target.transform.position);
-        if (_navMeshAgent.hasPath && remainingDistance < 2f)
+        if (_navMeshAgent.hasPath && remainingDistance < 2)
         {
             nextAction.setInRange(true);
             _previousDestination = nextAction.target.transform.position;
@@ -73,12 +79,13 @@ public class WaterBot : MonoBehaviour,IGoap
 
         return false;
     }
+
     private void OnDrawGizmos()
     {
         if (_nextAction != null)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(_nextAction.target.transform.position,2f);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(_nextAction.target.transform.position,.5f);
         }
     }
 }

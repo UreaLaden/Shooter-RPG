@@ -9,7 +9,7 @@ public class HarvestWater : GoapAction
     private bool completed;
     private float startTime = 0f;
     private NavMeshAgent _navMeshAgent;
-
+    private Rotate well;
     public HarvestWater()
     {
         addPrecondition("canRest",false);
@@ -35,6 +35,7 @@ public class HarvestWater : GoapAction
     public override bool perform(GameObject agent)
     {
         float remainingDistance = Helpers.GetPathRemainingDistance(agent.GetComponent<NavMeshAgent>());
+        well = FindObjectOfType<Rotate>();
         if (remainingDistance > 2f)
         {
             startTime = Time.time;
@@ -42,13 +43,14 @@ public class HarvestWater : GoapAction
 
         if (startTime == 0)
         {
-            Debug.Log("Collecting Water");
             startTime = Time.time;
+            well.extractWater = true;
         }
 
         if (Time.time - startTime > workDuration)
         {
-            Debug.Log("Done gathering water");
+            TownInventory.Instance.onHandWaterAmount += 2;
+            well.extractWater = false;
             completed = true;
         }
 

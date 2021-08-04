@@ -16,7 +16,7 @@ public class PickupFlour : GoapAction
         addPrecondition("hasStock",true);//when this is true we can pickup flour
         addPrecondition("hasFlour",false); //Action Takes place when hasFlour is false
         addEffect("hasFlour",true); //Adding this effect allows bakeBread to execute
-        name = "PickupFour"; // name for debugging
+        name = "PickupProduce"; // name for debugging
     }
     public override void reset()
     {
@@ -52,8 +52,8 @@ public class PickupFlour : GoapAction
         if (distanceRemaining < 1.2f && Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            TownInventory.Instance.onHandProduceAmount += amountToHarvest;
-            TownInventory.Instance.onHandProduceAmount -= amountToHarvest;
+            TownInventory.Instance.onHandFlourAmount += amountToHarvest;
+            TownInventory.Instance.storedProduceAmount -= amountToHarvest;
             completed = true;
         }
 

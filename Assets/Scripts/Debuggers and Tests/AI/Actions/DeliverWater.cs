@@ -7,10 +7,10 @@ public class DeliverWater : GoapAction
 {
     private bool completed;
     private float startTime;
-    private float workDuration;
+    private float workDuration = 2f;
     public DeliverWater()
     {
-        addPrecondition("hasDelivery",true);
+        addPrecondition("hasWater",true);
         addEffect("doJob",true);
         name = "Deliver Water";
 
@@ -41,17 +41,17 @@ public class DeliverWater : GoapAction
 
         if (startTime == 0f)
         {
-            Debug.Log("Delivering water barrels");
             startTime = Time.time;
         }
 
         if (Time.time - startTime > workDuration)
         {
-            Debug.Log("Done delivering water");
+            TownInventory.Instance.deliveredWater++;
+            TownInventory.Instance.onHandWaterAmount -= 2;
+            TownInventory.Instance.storedWaterAmount++;
             completed = true;
             return true;
         }
-
         return true;
     }
 

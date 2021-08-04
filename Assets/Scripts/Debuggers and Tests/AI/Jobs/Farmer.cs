@@ -25,7 +25,7 @@ public class Farmer : MonoBehaviour, IGoap
     public HashSet<KeyValuePair<string, object>> GetWorldState()
     {
         HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
-        worldData.Add(new KeyValuePair<string, object>("canRest", TownInventory.Instance.onHandProduceAmount >= TownInventory.Instance.produceCapacity)); 
+        worldData.Add(new KeyValuePair<string, object>("canRest", TownInventory.Instance.storedProduceAmount >= TownInventory.Instance.produceCapacity)); 
         return worldData;
     }
 
@@ -38,7 +38,7 @@ public class Farmer : MonoBehaviour, IGoap
 
     public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
     {
-        Debug.Log($"Farmer canRest? {TownInventory.Instance.onHandProduceAmount >= TownInventory.Instance.produceCapacity}");
+        Debug.Log($"Farmer canRest? {TownInventory.Instance.storedProduceAmount >= TownInventory.Instance.produceCapacity}");
         MoveAgent(_rest);
         _rest.perform(gameObject);
     }

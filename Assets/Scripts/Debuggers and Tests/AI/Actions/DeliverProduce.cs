@@ -8,6 +8,7 @@ public class DeliverProduce : GoapAction
     [SerializeField]private float workDuration = 2;
     private bool completed = false;
     private float startTime = 0;
+    public int deliveryAmount = 5;
     private NavMeshAgent _navMeshAgent;
     
     public DeliverProduce()
@@ -50,7 +51,7 @@ public class DeliverProduce : GoapAction
         {
             Debug.Log($"Finished: {name}");
             
-            TownInventory.Instance.onHandProduceAmount += 2;
+            TownInventory.Instance.storedProduceAmount += deliveryAmount;
             completed = true;
         }
 

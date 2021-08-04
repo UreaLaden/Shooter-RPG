@@ -6,9 +6,10 @@ using UnityEngine.AI;
 
 public class DeliverBread : GoapAction
 {
+    public int deliveryAmount = 5;
+    public float workDuration = 2;
     private bool completed = false;
     private float startTime = 0;
-    public float workDuration = 2;
 
     public DeliverBread()
     {
@@ -52,7 +53,8 @@ public class DeliverBread : GoapAction
         if (Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            this.GetComponent<TownInventory>().onHandBreadAmount -= 5;
+            TownInventory.Instance.onHandBreadAmount -= deliveryAmount;
+            TownInventory.Instance.storedBreadAmount += deliveryAmount;
             completed = true;
         }
         return true;

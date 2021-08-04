@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using NSubstitute.ReturnsExtensions;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class BakeBread : GoapAction
 {
     private bool completed = false;
     private float startTime = 0;
     public float workDuration = 2;
-    [SerializeField] private int breadCost = 2;
+    [SerializeField] private int flourCost = 2;
 
     public BakeBread()
     {
@@ -50,8 +51,8 @@ public class BakeBread : GoapAction
         if (Time.time - startTime > workDuration)
         {
             Debug.Log($"Finished: {name}");
-            TownInventory.Instance.onHandProduceAmount -= breadCost;
-            TownInventory.Instance.onHandBreadAmount += 1;
+            TownInventory.Instance.onHandFlourAmount -= flourCost;
+            TownInventory.Instance.onHandBreadAmount++;
             completed = true;
         }
 
