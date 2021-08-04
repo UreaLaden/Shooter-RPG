@@ -24,7 +24,7 @@ public class TownInventory : MonoBehaviour
         Instance = this;
     }
 
-    void OnGUI()
+   /* void OnGUI()
     {
         GUI.Box(new Rect(0,0 + drawOffset,150,125),"" + name);
         GUI.Label(new Rect(10,20 + drawOffset,150,20),$"Stored Produce:  {storedProduceAmount}");
@@ -34,5 +34,5 @@ public class TownInventory : MonoBehaviour
         GUI.Label(new Rect(10,80 + drawOffset,150,20),$"Flour On Hand:   {onHandFlourAmount}");
         GUI.Label(new Rect(10,95 + drawOffset,150,20),$"Water On Hand:   {onHandWaterAmount}");
     }
-   
+   */
 }
